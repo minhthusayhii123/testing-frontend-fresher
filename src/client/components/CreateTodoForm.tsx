@@ -35,6 +35,16 @@ export const CreateTodoForm = () => {
       },
     })
 
+  const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      createTodo({
+        body: event.currentTarget.value,
+      })
+      setTodoBody('')
+    }
+  }
+
   return (
     <form className="group flex items-center justify-between rounded-12 border border-gray-200 py-2 pr-4 focus-within:border-gray-400">
       <label htmlFor={TODO_INPUT_ID} className="sr-only">
@@ -46,6 +56,7 @@ export const CreateTodoForm = () => {
         type="text"
         placeholder="Add todo"
         value={todoBody}
+        onKeyDown={handleEnter}
         onChange={(e) => {
           setTodoBody(e.target.value)
         }}
@@ -54,6 +65,7 @@ export const CreateTodoForm = () => {
 
       <button
         type="button"
+        className="rounded-full bg-gray-700 px-5 py-2 text-white"
         disabled={isCreatingTodo}
         onClick={() => {
           createTodo({
